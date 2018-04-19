@@ -1,0 +1,23 @@
+body,html{
+    width: 100%;
+    height: 100%;
+}
+@import "./ba.css";
+@import "./header.scss";
+@import "./asider.scss";
+
+
+
+$HDcolor:#72D0EB;
+
+.HDcolor{
+    background: $HDcolor;
+}
+.main{
+    box-sizing: border-box;
+    padding-top:60px;
+    background-color: #E5E6E6;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+}

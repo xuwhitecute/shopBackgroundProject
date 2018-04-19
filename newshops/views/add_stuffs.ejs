@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/libcss/bootstrap.min.css" />
+    <link rel="stylesheet" href="/libcss/index.css"/>
+    <link rel="stylesheet" href="/libcss/add.css"/>
+    <link href="/libcss/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_599232_jnim5st0m8jpds4i.css" />
+    <link href="/libcss/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <script type="text/javascript" src="/libjs/xheditor/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/libjs/jquery.form.js"></script>
+    <script src="/libjs/bootstrap.min.js"></script>
+    <script src="/libjs/bootstrap-select.min.js"></script>
+    <script src="/libjs/defaults-zh_CN.min.js"></script>
+    <script src="/libjs/bootstrap-datetimepicker.js"></script>
+    <title>stuffs</title>
+</head>
+<body>
+    <%-include('header.ejs',{username}) %>
+      <%include asider.ejs %>
+      <div class="main">
+            <div class="container addclass">
+                <form action="/stuffs/add_stuffs_server" class="form-horizontal"  method="post" name="add_stuffs" id="add_stuffs">
+                    <div class="form-group">
+                        <label for="stuffsname" class="col-sm-1 control-label">员工姓名:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="stuffsname" placeholder="员工姓名" name="stuffsname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="stuffsphone">联系方式:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="stuffsphone" 
+                            placeholder="联系方式" name="stuffsphone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="jointime">入职时间:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="jointime" 
+                            placeholder="入职时间" name="jointime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="col-sm-1 control-label" for="stuffsex">性别:</label>
+                    <div class="col-sm-3">
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="sex" id="optionsRadios1" value="men" checked>
+                                男
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="sex" id="optionsRadios2" value="women">
+                              女
+                            </label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="stuffjob">岗位:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="stuffjob">
+                                <option value="客服">客服</option>
+                                <option value="运营">运营</option>
+                                <option value="物流">物流</option>
+                                <option value="管理">管理</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:none">
+                        <label class="col-sm-1 control-label" for="status">在职状态:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="status" 
+                            placeholder="在职状态" name="status" value="在职">
+                        </div>
+                    </div>
+                    <div class="form-group " >
+                        <div class=" col-sm-3 col-sm-offset-1" >
+                            <input type="submit" class="btn col-sm-6 btn-primary" value="确定提交" >
+                        </div>
+                    </div>
+                </form>
+               
+            </div>
+      </div>
+ 
+   
+
+   
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">提交成功</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" 
+                onclick="window.location.reload()">继续添加</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/stuffs/show_stuffs'">去列表页面</button>
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+<script>
+    $("#jointime").datetimepicker({
+    language:  'zh-CN',  //日期
+    format: 'yyyy-mm-dd',//显示格式
+    todayHighlight: 1,//今天高亮
+    minView: "month",//设置只显示到月份
+    startView:2,
+    forceParse: 0,
+    showMeridian: 1,
+    autoclose: 1//选择后自动关闭
+    });
+
+
+   $(function(){  
+    /** 验证文件是否导入成功  */  
+    $("#add_stuffs").ajaxForm(function(data){    
+        if(data.code==1){
+            $('#myModal').modal({
+            show: true,
+            backdrop:'static'
+        })
+        }
+    });       
+});  
+</script>
+</html>

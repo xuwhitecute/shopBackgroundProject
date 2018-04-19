@@ -1,0 +1,78 @@
+
+      <div class="main">
+            <div class="container addclass">
+                <form action="/stuffs/add_stuffs_server" class="form-horizontal"  method="post" name="add_stuffs" id="add_stuffs">
+                    <div class="form-group">
+                        <label for="stuffsname" class="col-sm-1 control-label">员工姓名:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="stuffsname" placeholder="员工姓名" name="stuffsname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="stuffsphone">联系方式:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="stuffsphone" 
+                            placeholder="联系方式" name="stuffsphone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="jointime">入职时间:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="jointime" 
+                            placeholder="入职时间" name="jointime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="col-sm-1 control-label" for="stuffsex">性别:</label>
+                    <div class="col-sm-3">
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="sex" id="optionsRadios1" value="men" checked>
+                                男
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="sex" id="optionsRadios2" value="women">
+                              女
+                            </label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="stuffjob">岗位:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control stuffjob" name="stuffjob">
+                                <option value="客服">客服</option>
+                                <option value="运营">运营</option>
+                                <option value="物流">物流</option>
+                                <option value="管理">管理</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="status">在职状态:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control status" name="status">
+                                    <option value="在职">在职</option>
+                                    <option value="离职">离职</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+               
+            </div>
+      </div>
+<script>
+    $("#jointime").datetimepicker({
+    language:  'zh-CN',  //日期
+    format: 'yyyy-mm-dd',//显示格式
+    todayHighlight: 1,//今天高亮
+    minView: "month",//设置只显示到月份
+    startView:2,
+    forceParse: 0,
+    showMeridian: 1,
+    autoclose: 1//选择后自动关闭
+    });
+
+</script>

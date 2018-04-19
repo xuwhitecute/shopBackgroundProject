@@ -1,0 +1,97 @@
+
+<body>
+      <div class="main">
+            <div class="container addclass">
+                <form action="/members/add_members_server" class="form-horizontal"  method="post" name="add_members" id="add_members">
+                    <div class="form-group">
+                        <label for="memberssname" class="col-sm-1 control-label">会员姓名:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="memberssname" placeholder="会员姓名" name="memberssname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="membersphone">联系方式:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="membersphone" 
+                            placeholder="联系方式" name="membersphone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="jointime">入会时间:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="jointime" 
+                            placeholder="入会时间" name="jointime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="col-sm-1 control-label" for="memberssex">性别:</label>
+                    <div class="col-sm-3">
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="sex" id="memberssex" value="men" checked>
+                                男
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="sex" id="memberssex" value="women">
+                              女
+                            </label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-1 control-label" for="viplevel">等级:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control viplevelbox" name="viplevel" id='viplevel'>
+                                <option value="青铜">青铜</option>
+                                <option value="水晶">水晶</option>
+                                <option value="黄金">黄金</option>
+                                <option value="王者">王者</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-1 control-label" for="address">收货地址:</label>
+                        <div class="col-sm-8">
+                            <div data-toggle="distpicker" id="distpicker" class="form-group" >
+                                <div class="col-md-3">
+                                    <select class="col-md-3 form-control province" name="province" data-province="---- 选择省 ----"></select>
+                                </div>
+                                <div class="col-md-3">
+                                <select class="col-md-3 form-control city" name="city" data-city="---- 选择市 ----"></select>
+                                </div>
+                                <div class="col-md-3">
+                                <select class="col-md-3 form-control district" name="district" data-district="---- 选择区 ----"></select>
+                            </div>
+                            </div>
+                            <input type="text" class="form-control col-md-4 addressdetails" id="addressdetails" 
+                            placeholder="详细地址" name="addressdetails" />
+                        </div>
+                    </div>
+                </form>
+               
+            </div>
+      </div>
+<script>
+    
+
+   $(function(){  
+    $("#jointime").datetimepicker({
+    language:  'zh-CN',  //日期
+    format: 'yyyy-mm-dd',//显示格式
+    todayHighlight: 1,//今天高亮
+    minView: "month",//设置只显示到月份
+    startView:2,
+    forceParse: 0,
+    showMeridian: 1,
+    autoclose: 1//选择后自动关闭
+    });
+
+
+    $("#distpicker").distpicker();
+    /** 验证文件是否导入成功  */  
+    
+});  
+</script>
+</html>

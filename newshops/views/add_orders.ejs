@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/libcss/bootstrap.min.css" />
+    <link rel="stylesheet" href="/libcss/index.css"/>
+    <link rel="stylesheet" href="/libcss/add.css"/>
+    <link href="/libcss/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_599232_jnim5st0m8jpds4i.css" />
+    <script src="/libjs/echarts.min.js"></script>
+    <!-- <script src="/libjs/jquery.min.js"></script> -->
+    <script type="text/javascript" src="/libjs/xheditor/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/libjs/jquery.form.js"></script>
+    <script src="/libjs/bootstrap.min.js"></script>
+    <script src="/libjs/bootstrap-select.min.js"></script>
+    <script src="/libjs/defaults-zh_CN.min.js"></script>
+	<script type="text/javascript" src="/libjs/xheditor/xheditor-1.2.2.min.js"></script>
+	<script type="text/javascript" src="/libjs/xheditor/xheditor_lang/zh-cn.js"></script>
+    <title>orders</title>
+</head>
+<body>
+    <%-include('header.ejs',{username}) %>
+      <%include asider.ejs %>
+      <div class="main">
+          <div class="container addclass">
+              <form action="/orders/add_orders_server" class="form-horizontal" method="post" id="add_orders_server">
+                  <!-- 选择销售 -->
+                    <div class="form-group "> 
+                        <label class="control-label col-md-1">选择客服</label>
+                        <div class="col-md-4">
+                            <select name="sellerid"  class="form-control">
+                                <% staffinfo.forEach((item,idx)=>{ %>
+                                    <% if(item.stuffjob=="客服"){ %>
+                                        <option value="<%-item.sid%>"><%-item.stuffsname%></option>
+                                    <% } %>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                  <!-- 选择销售结束 -->
+                  <!-- 选择客户 -->
+                    <div class="form-group "> 
+                        <label class="control-label col-md-1">选择会员</label>
+                        <div class="col-md-4">
+                            <select name="memberid"  class="form-control">
+                                   <%  membersinfo.forEach((item,idx)=>{ %>
+                                        <option value="<%-item.mid%>"><%-item.memberssname%></option>
+                                   <%  }) %>
+                            </select>
+                        </div>
+                    </div>
+                  <!-- 选择客户结束 -->
+                  <!-- 选择商品 -->
+                  <div class="form-group "> 
+                    <label class="control-label col-md-1">选择商品</label>
+                    <div class="col-md-6" >
+                        <select multiple class="form-control Jgoods" name="goods" style="height:200px;">
+                                <% goodsinfo.forEach((item,idx)=>{ %>
+                                    <% if(idx==0){ %>
+                                        <option value="<%-item.id%>" style="height:28px;" selected>
+                                            <%-item.goodssellpoint%>
+                                        </option>
+                                        <% }else{ %>
+                                        <option value="<%-item.id%>" style="height:28px;">
+                                                <%-item.goodssellpoint%>
+                                        </option>
+                                        <%} %>
+
+                                <% }) %>
+                          </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select multiple class="form-control Jgoodschild"  name="goodschild"style="height:200px">
+                           <% goodsinfo[0].childspecs.split(",").forEach((item,idx)=>{ %>
+                                <% if(idx==0){ %>
+                                    <option value="<%-item+'&'+goodsinfo[0].childprice.split(',')[idx]%>" selected>
+                                        <%-item%>                                
+                                    </option>             
+                                    <% }else{ %>
+                                    <option value="<%-item+'&'+goodsinfo[0].childprice.split(',')[idx]%>"><%-item%></option>
+                                    <% } %>
+                            <% }) %>
+                          </select>
+                    </div>
+                 </div>
+                 <!-- 商品数量选择 -->
+                 <div class="form-group "> 
+                    <label class="control-label col-md-1">选择数量</label>
+                    <div class="col-md-4">
+                        <select multiple class="form-control" name="goodscount" style="height:200px">
+                                <% for(var i=1; i<=100;i++){ %>
+                                    <% if(i==1){ %>
+                                        <option value="<%-i%>" selected><%-i%></option>           
+                                        <% }else{ %>
+                                            <option value="<%-i%>"><%-i%></option>
+                                        <% } %>
+                                <% } %>
+                          </select>
+                    </div>
+                 </div>
+                  <!-- 选择商品结束 -->
+                  <!-- 选择发货地址 -->
+                  <div class="form-group "> 
+                        <label class="control-label col-md-1">选择仓库</label>
+                        <div class="col-md-4">
+                            <select name="logisticsid"  class="form-control">
+                                    <% addressinfo.forEach((item,idx)=>{ %>
+                                        <option value="<%-item.adsid %>"><%- item.logisticssname %></option>
+                                    <%}) %>
+                            </select>
+                        </div>
+                </div>
+                <input type="text" name="orderstatus" value="0" style="display:none">
+                <div class="form-group " >
+                        <div class=" col-sm-6 col-sm-offset-1" >
+                            <input type="submit" class="btn col-sm-6 btn-primary" value="确定提交" >
+                        </div>
+                    </div>
+              </form>
+          </div>      
+            <!-- 选择发货地址结束 -->
+            
+ 
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">提交成功</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" 
+                onclick="window.location.reload()">继续添加</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/orders/show_orders'">去列表页面</button>
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+<script>
+    $(".Jgoods").change(function(){
+        var value=$(".Jgoods").val();
+        $.ajax({
+            type:"post",
+            url:"/orders/searchgoodschild",
+            data:{goodsid:value[0]},
+            success(result){
+                if(result.code==1){
+                    var goodschild=result.result[0].childspecs.split(",");
+                    var childprice=result.result[0].childprice.split(",");
+                    var html='';
+                    goodschild.forEach((item,idx)=> {
+                            if(idx==0){
+                                html+=`
+                                    <option value="${item}&${childprice[idx]}" selected>${item}</option>   
+                                    `;    
+                            }else{
+                                html+=`
+                                    <option value="${item}&${childprice[idx]}">${item}</option>   
+                                    `;                           
+                            }
+                    });
+                    $(".Jgoodschild").html(html);
+                }else{
+                    var value=$(".Jgoods").
+                    $(".Jgoodschild").html(` <option value="${result.result[0].goodssellpoint}" selected>${result.result[0].goodssellpoint}</option>`);
+                }
+            }
+        })
+    })
+
+   $(function(){ 
+    /** 验证文件是否导入成功  */  
+    $("#add_orders_server").ajaxForm(function(data){    
+        if(data.code==1){
+            $('#myModal').modal({
+            show: true,
+            backdrop:'static'
+        })
+        }
+    });       
+});  
+</script>
+</html>

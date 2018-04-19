@@ -1,0 +1,62 @@
+<script src="/libjs/template.js"></script>
+<script type="text/html" id="test">
+  <ul>
+    {{ each menulist as item i }}
+      <li>
+          <div class="panel-group"  role="tablist" aria-multiselectable="true" data-toggle="collapse" href="#{{item.class}}" >
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab">
+                <h4 class="panel-title"  data-parent="#accordion"   aria-controls="{{item.class}}">
+                    {{  item.title }}
+                </h4>
+              </div>
+              <div id="{{item.class}}" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+                  {{ each item.list as ls i }}
+                <div class="panel-body">
+                  <a href="{{ ls.href }}">
+                    {{ ls.name }}
+                  </a>
+                </div>
+                {{ /each }}
+              </div>
+          </div>
+      </li>
+      {{ /each }}
+  </ul>
+</script>
+<div class="asider">
+    <div id="art-wrap">   
+    </div>
+</div>
+<script>
+  window.onload = function(){
+      var dictionary = {
+        menulist: [
+          {class:"home",title:"首页",list:[]},
+          {class:"goods",title:"商品",
+          list:[{href:"/login",name:"商品列表"},
+                {href:"#",name:"增加商品"},
+                {href:"#",name:"修改商品"}]},
+          {class:"staffs",title:"员工",list:[
+                {href:"#",name:"员工列表"},
+                {href:"#",name:"新增员工"},
+                {href:"#",name:"修改员工"}]},
+          {class:"order",title:"订单",list:[
+                {href:"#",name:"订单列表"},
+                {href:"#",name:"新增订单"},
+                {href:"#",name:"修改订单"}]},
+          {class:"members",title:"会员",list:[
+                {href:"#",name:"会员列表"},
+                {href:"#",name:"新增会员"},
+                {href:"#",name:"修改会员"}]},
+          {class:"logistics",title:"物流",list:[
+                {href:"#",name:"发货页面"},
+                {href:"#",name:"物流修改页面"},
+                {href:"#",name:"发货地址库"},
+                {href:"#",name:"运费模板"}]},
+        ]
+      };
+      var html = template('test',dictionary);
+      document.getElementById('art-wrap').innerHTML = html;
+  }
+</script>

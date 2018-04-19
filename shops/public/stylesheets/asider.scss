@@ -1,0 +1,30 @@
+.asider{
+    width: 210px;
+    height: 100%;
+    float: left;
+    background-color: #2A3542;
+    box-sizing: border-box;
+    padding-top:60px;
+    overflow-y: scroll;
+    .wrap{
+        width: 100%;
+        .aswider_item{
+            width: 90%;
+            margin: 0 5%;
+            font-size: 16px;
+            i{
+                font-size: 16px;
+            }
+            span{
+                margin: 0 30px;
+            }
+            
+        }
+        .item_list{
+            width: 90%;
+            margin: 0 5%;
+            background-color: #2A3542;
+            color: #fff;
+        }
+    }
+ }

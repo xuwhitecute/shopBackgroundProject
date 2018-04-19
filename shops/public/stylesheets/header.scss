@@ -1,0 +1,28 @@
+.header{
+    position: fixed;
+    top: 0;
+    background: #72D0EB;
+    min-height: 60px;
+    .container{
+        margin-left: 0;
+        width: 100%;
+    }
+    .menu-left{
+        float: left;
+        width: 34px;
+        height: 34px;
+        font-size: 34px;
+    }
+    .userinfo{
+        float:right;
+        height: 34px;
+        margin-top: 7px;
+        button{
+            height: 34px;
+        }
+    }
+    .search{
+        float: right;
+        margin-top: 7px;
+    }
+}

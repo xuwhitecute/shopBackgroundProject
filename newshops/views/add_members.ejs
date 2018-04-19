@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/libcss/bootstrap.min.css" />
+    <link rel="stylesheet" href="/libcss/index.css"/>
+    <link rel="stylesheet" href="/libcss/add.css"/>
+    <link href="/libcss/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_599232_jnim5st0m8jpds4i.css" />
+    <link href="/libcss/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <script type="text/javascript" src="/libjs/xheditor/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/libjs/jquery.form.js"></script>
+    <script src="/libjs/bootstrap.min.js"></script>
+    <script src="/libjs/bootstrap-select.min.js"></script>
+    <script src="/libjs/defaults-zh_CN.min.js"></script>
+    <script src="/libjs/bootstrap-datetimepicker.js"></script>
+    <script src="/libjs/distpicker.data.js"></script>
+    <script src="/libjs/distpicker.js"></script>
+    <title>stuffs</title>
+</head>
+<body>
+    <%-include('header.ejs',{username}) %>
+      <%include asider.ejs %>
+      <div class="main">
+            <div class="container addclass">
+                <form action="/members/add_members_server" class="form-horizontal"  method="post" name="add_members" id="add_members">
+                    <div class="form-group">
+                        <label for="memberssname" class="col-sm-1 control-label">会员姓名:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="memberssname" placeholder="会员姓名" name="memberssname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="membersphone">联系方式:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="membersphone" 
+                            placeholder="联系方式" name="membersphone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="jointime">入会时间:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="jointime" 
+                            placeholder="入会时间" name="jointime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="col-sm-1 control-label" for="memberssex">性别:</label>
+                    <div class="col-sm-3">
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="sex" id="memberssex" value="men" checked>
+                                男
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="sex" id="memberssex" value="women">
+                              女
+                            </label>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="viplevel">等级:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="viplevel" id='viplevel'>
+                                <option value="青铜">青铜</option>
+                                <option value="水晶">水晶</option>
+                                <option value="黄金">黄金</option>
+                                <option value="王者">王者</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-1 control-label" for="address">收货地址:</label>
+                        <div class="col-sm-8">
+                            <div data-toggle="distpicker" id="distpicker" class="form-group" >
+                                <div class="col-md-3">
+                                    <select class="col-md-3 form-control" name="province" data-province="---- 选择省 ----"></select>
+                                </div>
+                                <div class="col-md-3">
+                                <select class="col-md-3 form-control" name="city" data-city="---- 选择市 ----"></select>
+                                </div>
+                                <div class="col-md-3">
+                                <select class="col-md-3 form-control" name="district" data-district="---- 选择区 ----"></select>
+                            </div>
+                            </div>
+                            <input type="text" class="form-control" id="addressdetails" 
+                            placeholder="详细地址" name="addressdetails" />
+                        </div>
+                    </div>
+                    <div class="form-group " >
+                        <div class=" col-sm-3 col-sm-offset-1" >
+                            <input type="submit" class="btn col-sm-6 btn-primary" value="确定提交" >
+                        </div>
+                    </div>
+                </form>
+               
+            </div>
+      </div>
+ 
+   
+
+   
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">提交成功</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" 
+                onclick="window.location.reload()">继续添加</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/members/show_members'">去列表页面</button>
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+<script>
+    
+
+   $(function(){  
+    $("#jointime").datetimepicker({
+    language:  'zh-CN',  //日期
+    format: 'yyyy-mm-dd',//显示格式
+    todayHighlight: 1,//今天高亮
+    minView: "month",//设置只显示到月份
+    startView:2,
+    forceParse: 0,
+    showMeridian: 1,
+    autoclose: 1//选择后自动关闭
+    });
+
+
+    $("#distpicker").distpicker();
+    /** 验证文件是否导入成功  */  
+    $("#add_members").ajaxForm(function(data){    
+        if(data.code==1){
+            $('#myModal').modal({
+            show: true,
+            backdrop:'static'
+        })
+        }
+    });       
+});  
+</script>
+</html>

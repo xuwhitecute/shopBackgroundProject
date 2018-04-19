@@ -1,0 +1,235 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/libcss/bootstrap.min.css" />
+    <link rel="stylesheet" href="/libcss/index.css"/>
+    <link rel="stylesheet" href="/libcss/add.css"/>
+    <link href="/libcss/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_599232_jnim5st0m8jpds4i.css" />
+    <script src="/libjs/echarts.min.js"></script> -->
+    <!-- <script src="/libjs/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="/libjs/xheditor/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/libjs/jquery.form.js"></script>
+    <script src="/libjs/bootstrap.min.js"></script>
+    <script src="/libjs/bootstrap-select.min.js"></script>
+    <script src="/libjs/defaults-zh_CN.min.js"></script>
+	<script type="text/javascript" src="/libjs/xheditor/xheditor-1.2.2.min.js"></script>
+	<script type="text/javascript" src="/libjs/xheditor/xheditor_lang/zh-cn.js"></script>
+    <title>shops</title>
+</head> -->
+<body>
+    <div class="container addclass">
+        <form  class="form-horizontal" enctype="multipart/form-data" name="add_goods" id="moditifygoods">
+            <div class="form-group">
+                <label for="goodstitle" class="col-sm-1 control-label">宝贝标题:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control Jgoodstitle" id="goodstitle" placeholder="宝贝标题" name="goodstitle" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label" for="goodssellpoint">宝贝卖点:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control Jgoodssellpoint" id="goodssellpoint" 
+                    placeholder="宝贝卖点" name="goodssellpoint">
+                </div>
+            </div>
+            <div class="form-group">
+            <label class="col-sm-1 control-label" for="Oprice">一口价:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control JOprice" id="Oprice" 
+                placeholder="一口价" name="Oprice">
+            </div>
+                <label class="col-sm-1 control-label" for="discount">折扣:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control Jdiscount" id="discount" 
+                    placeholder="折扣" name="discount">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label" for="specifications">宝贝规格:</label>
+                <div class="col-sm-3">
+                    <input type="button" class="btn btn-primary" value="宝贝规格" data-toggle="collapse" data-target="#collapses_specifications" >
+                </div>
+            </div>
+            <div class="form-group collapse in" id="collapses_specifications">
+                <div class="  col-sm-offset-1" >
+                    <div class="well Jbox">
+                        <div class="row Jspecs row-margin-bottom">
+                            <label for="" class="col-sm-1 control-label Jspeacname">规格 1</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" placeholder="规格" name="childspecs">
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" placeholder="价格" name="childprice">
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control childcount" placeholder="数量" name="childcount">
+                            </div>
+                            <botton class=" col-sm-1 btn btn-info text-center Jaddspesc" ><span class="glyphicon glyphicon-plus"></span></botton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label" for="count">数量:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control allcount Jallcount" id="count" 
+                    placeholder="数量" name="count">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label" for="picture">图片:</label>
+                <div class="col-sm-3">
+                    <input type="button" class="btn btn-primary" value="上传图片" data-toggle="collapse" data-target="#picture" >
+                </div>
+            </div>
+            <div class="form-group collapse in" id="picture">
+                <div class="  col-sm-offset-1" >
+                    <div class="well">
+                        <label for="img1">
+                            <img src="http://placehold.it/150x150" alt="..." class="img-rounded showimg" id="Jimg1">
+                        </label>
+                        <input type="file" name="img" id="img1" style="display:none" >
+                        <input type="text" name="imgsrc" style="display:none" class="imgsrc1">
+                        <label for="img2">
+                            <img src="http://placehold.it/150x150" alt="..." class="img-rounded showimg" id="Jimg2">
+                        </label>
+                        <input type="file" name="img" id="img2" style="display:none" > 
+                        <input type="text" name="imgsrc" style="display:none" class="imgsrc2">
+                        <label for="img3">
+                            <img src="http://placehold.it/150x150" alt="..." class="img-rounded showimg" id="Jimg3">
+                        </label>
+                        <input type="file" name="img" id="img3" style="display:none" >
+                        <input type="text" name="imgsrc" style="display:none" class="imgsrc3">
+                        <label for="img4">
+                            <img src="http://placehold.it/150x150" alt="..." class="img-rounded showimg" id="Jimg4">
+                        </label>
+                        <input type="file" name="img" id="img4" style="display:none" >
+                        <input type="text" name="imgsrc" style="display:none" class="imgsrc4">
+                        <label for="img5">
+                            <img src="http://placehold.it/150x150" alt="..." class="img-rounded showimg" id="Jimg5">
+                        </label>
+                        <input type="file" name="img" id="img5" style="display:none" >
+                        <input type="text" name="imgsrc" style="display:none" class="imgsrc5">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label" for="goodsdetail">宝贝详情:</label>
+                <div class="col-sm-11 Jttxtarea" >
+                    <textarea class="form-control col-sm-11" cols="120" rows="18"name="goodsdetail"  id="goodsdetail"  placeholder="请输入详情"></textarea>
+                </div>
+            </div>
+        </form>          
+    </div>
+    <!-- 富文本框 -->
+    <script type="text/javascript">
+        // $("#content").xheditor();  实例化
+        $(pageInit);
+        //  comment.ejs  /comment/index
+        function pageInit(){
+            $.extend(XHEDITOR.settings,{shortcuts:{"ctrl+enter":submitForm}});
+            // $("#ele").xheditor();
+            $("#goodsdetail").xheditor({   //初始化 富文件编辑框
+                width:"100%",
+                height:"800px",
+
+                html5Upload:false,
+                upMultiple:"1",
+
+                upLinkRrl:"upload.html",
+                upLinkExt:"zip,rar,txt",
+
+                upImgUrl:"/home/uploadImg",
+                upImgExt:"jpg,jpeg,gif,png",
+
+                upFlashUrl:"upload.php",
+                upFlashExt:"swf",
+
+                upMediaUrl:"upload.php",
+                upMediaExt:"wmv,avi,wma,mp3,mid"
+
+            });
+        };
+
+        function insertUpload(arrMsg){
+            console.log(arrMsg);
+            var i,msg;
+            for(var i=0;i<arrMsg.length;i++){
+                msg=arrMsg[i];
+                console.log(msg);
+                $("#uploadList").append('<option value="'+msg.id+'">'+msg.localname+'</option>')
+            }
+        };
+
+        function submitForm(){
+            $("#frmDemo").submit();
+           
+        }
+    </script> 
+    <!-- 增加按钮 -->
+    <script type="text/javascript">
+        var Jbox = $(".Jbox");
+        var Jspecs = Jbox.find(".Jspecs");
+        var Jaddspesc=Jspecs.find(".Jaddspesc");
+        var count=1;
+        Jbox.delegate(".Jaddspesc","click",function(){
+            $(".Jspeacname").eq(-1).html("规格 "+ count);
+            count++;
+            var newItem = Jspecs.clone(false);
+            Jbox.append(newItem);
+            $(".Jaddspesc").remove();
+            $(".Jspecs").eq(-1).append(Jaddspesc);
+            $(".Jspeacname").eq(-1).html("规格 "+ count);
+            $("input[name=childspecs]").eq(-1).val("");
+            $("input[name=childprice]").eq(-1).val("");
+            $("input[name=childcount]").eq(-1).val("");
+        });
+        Jbox.delegate("input[name=childcount]","blur",function(){
+            var sum=0;
+            Jbox.find(".childcount").each((idx,item) => {
+                    sum+=$(item).val()*1;
+            });
+            $(".allcount").val(sum);
+        });
+       
+    </script>
+    <!-- 上传主图 -->
+     <script type="text/javascript">
+        $("input[name=img]").on("change",upDataShow)
+        function upDataShow(){
+            var files=this.files;
+            var that=this;
+            // var objFile = $('#img1').val();
+            var objFile = $(this).val();
+            var objType = objFile.substring(objFile.lastIndexOf(".")).toLowerCase();
+            var formData = new FormData();
+            formData.append('file', files[0]);
+            if(!(objType == '.jpg'||objType == '.png'))
+            {
+                alert("请上传jpg、png类型图片");
+                return false;
+            }else{
+                $.ajax({
+                    type : 'post',
+                    url : '/home/uploadImgshow',
+                    data: formData ,
+                    processData:false,
+                    async:false,
+                    cache: false,  
+                    contentType: false, 
+                    success:function(re){
+                        re.imgSrc = re.imgSrc.replace('public','');
+                        re.imgSrc = re.imgSrc.replace(/\\/g,'\/');
+                        $(that).prev().find("img").attr('src',re.imgSrc);
+                        $(that).next().val(re.imgSrc);
+                    },
+                });    
+            }
+        }
+    </script>
+</body>
+<!-- </html> -->

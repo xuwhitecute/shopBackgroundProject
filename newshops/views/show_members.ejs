@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/libcss/bootstrap.min.css" />
+    <link rel="stylesheet" href="/libcss/index.css"/>
+    <link rel="stylesheet" href="/libcss/add.css"/>
+    <link href="/libcss/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_599232_jnim5st0m8jpds4i.css" />
+    <link href="/libcss/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <script src="/libjs/echarts.min.js"></script>
+    <!-- <script src="/libjs/jquery.min.js"></script> -->
+    <script type="text/javascript" src="/libjs/xheditor/jquery/jquery-1.11.2.min.js"></script>
+    <script src="/libjs/bootstrap.min.js"></script>
+    <script src="/libjs/bootstrap-select.min.js"></script>
+    <script src="/libjs/defaults-zh_CN.min.js"></script>
+	<script type="text/javascript" src="/libjs/xheditor/xheditor-1.2.2.min.js"></script>
+    <script type="text/javascript" src="/libjs/xheditor/xheditor_lang/zh-cn.js"></script>
+    <script src="/libjs/bootstrap-datetimepicker.js"></script>
+    <script src="/libjs/distpicker.data.js"></script>
+    <script src="/libjs/distpicker.js"></script>
+    <title>shops</title>
+</head>
+<body>
+    <%-include('header.ejs',{username}) %>
+    <%include asider.ejs %>
+    <div class="main">
+        <!-- 员工查找 -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group col-lg-4">
+                    <input type="text " class="form-control col-lg-4 JSearch" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" onclick="searchBytitle()" type="button">员工查找</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div>
+        <table class="table table-striped text-center">
+            <thead class="text-center">
+                <tr class="text-center">
+                    <th  class="col-xs-1"><a class="btn desc" 
+                        href="/members/show_members?sort=mid" role="button">编号</a></th>
+                    <th  class="col-xs-1">会员姓名</th>
+                    <th  class="col-xs-1">联系方式</th>
+                    <th  class="col-xs-1"><a class="btn desc" href="/members/show_members?sort=jointime" role="button">入会时间</a></th>  
+                    <th  class="col-xs-1">性别</th>
+                    <th  class="col-xs-1">等级</th>
+                    <th  class="col-xs-3">收货地址</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <!-- 员工列表渲染 -->
+            <tbody>
+                <% if(result){ %> 
+                    <% result.forEach(function(item,idx){ %>
+                        <tr>
+                            <td ><%-item.mid%></td>
+                            <td><%-item.memberssname%></td>
+                            <td><%-item.membersphone%></td>
+                            <td><%-item.jointime.toISOString().split("T")[0]%></td>
+                            <td><%-item.sex=="men"?"男":"女"%></td>
+                            <td><%-item.viplevel%></td>
+                            <td><%-item.province+item.city+item.district+item.addressdetails%></td>
+                            <td>
+                                <button  class="btn btn-danger"  role="button " data-toggle="modal" data-target="#deletegoods" onclick="giveid(<%-item.mid%>)" >删除</butt>
+                                <button  class="btn btn-info moditfgoods" role="button" data-toggle="modal" data-target="#moditfs" onclick="moditfs(<%-item.mid %>)">修改</button>
+                            </td>
+                        </tr>
+    
+                    <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+        <% if(totalPage){ %>
+            <div class="row">
+                    <nav aria-label="Page navigation " style="text-align: center;">
+                    <ul class="pagination ">
+                        <li>
+                        <a href="javascript:;" aria-label="Previous" onclick="pagechangeprev(this)">
+                            <span aria-hidden="true">上一页</span>
+                        </a>
+                        </li>
+                        <% for(var i=showpageNo-1;i<=totalPage;i++){ %>
+                            <li><a class="changeByA" href="javascript:;" onclick="changeBypageNo(<%- i %>)"><%-i%></a></li>
+                        <% } %>
+                        <li><span aria-hidden="true">第<%=pageNo%>页  总计<%=totalPage%>页</span></li>
+                        <li>
+                        <a href="javascript:;" aria-label="Next">
+                            <span aria-hidden="true" onclick="pagechangenext(this)">下一页</span>
+                        </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>      
+        <% }else{ %>
+            <div class="row">
+                <p class="text-danger text-center bg-danger">无此会员</p>
+            </div>    
+        <% } %>
+    </div>
+    <!-- 修改员工的界面 -->
+    <div class="modal fade" id="moditfs" tabindex="-1" role="dialog"                      aria-labelledby="myModalLabel ">
+        <div class="modal-dialog" role="document" style="width:60%">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改会员信息</h4>
+            </div>
+            <div class="modal-body" data-id="">
+                <%- include('modtify_members') %>
+            </div>
+            <div class=" modal-footer " style="text-align:center;">
+                <button type="button" class="btn btn-primary modtifysumbit " onclick="modtifysumbit()" data-dismiss="modal">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+            </div>
+            </div>
+    </div>
+    <!-- 删除模态的确定 -->
+    <div class="modal fade" id="deletegoods" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">删除该会员</h4>
+            </div>
+            <div class="modal-body">
+                您确定要删除该会员吗？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary modaldelete" 
+              onclick="deleteitem()" deletid="" data-dismiss="modal">删除</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script>
+    //搜寻内容
+    function searchBytitle(){
+        var search=window.location.search;
+        var searchObj=change(search);
+        var sortsearch=searchObj.sort?`&sort=${searchObj.sort}`:``;
+        var pageNosearch=searchObj.pageNo?`&pageNo=${searchObj.pageNo}`:``;
+        var goodssearch=$(".JSearch").val()?`&search=${$(".JSearch").val()}`:'';
+        var searchstr=sortsearch+pageNosearch+goodssearch;
+        searchstr=searchstr.replace(/^&/,"")
+        window.location.href=window.location.pathname+"?"+searchstr;
+    }
+    //下角标按钮
+    function changeBypageNo(i){
+        var search=window.location.search;
+        var searchObj=change(search)
+        if(searchObj.sort){
+            window.location.href=window.location.pathname+`?sort=${searchObj.sort}&pageNo=${i}`;
+        }else{
+            window.location.href=window.location.pathname+`?pageNo=${i}`;
+        }
+    }
+    //上一页按钮
+    function pagechangeprev(){  
+        var search=window.location.search;
+        var searchObj=change(search)
+
+        // var sortsearch=searchObj.sort?`&sort=${searchObj.sort}`:``;
+        // var pageNosearch=`&pageNo=<%- pageNo-1<=1?1:pageNo-1 %>`;
+        // var goodssearch=searchObj.search?searchObj.search:'';
+        // var searchstr=sortsearch+pageNosearch+goodssearch;
+        // searchstr=searchstr.replace(/^&/,"")
+        // window.location.href=window.location.pathname+"?"+searchstr;
+
+
+
+        if(searchObj.sort){
+            window.location.href=window.location.pathname+`?sort=${searchObj.sort}`+"&pageNo=<%- pageNo-1<=1?1:pageNo-1 %>"
+        }else{
+            window.location.href=window.location.pathname+"?pageNo=<%- pageNo-1<=1?1:pageNo-1 %>"
+        }
+    }
+    //下一页按钮
+    function pagechangenext(){  
+        var search=window.location.search;
+        var searchObj=change(search)
+        if(searchObj.sort){
+            window.location.href=window.location.pathname+`?sort=${searchObj.sort}`+"&pageNo=<%- pageNo+1>=totalPage?totalPage:pageNo+1 %>"
+        }else{
+            window.location.href=window.location.pathname+"?pageNo=<%- pageNo+1>=totalPage?totalPage:pageNo+1 %>"
+        }
+    }
+
+    //=====================================================================================
+    //获取search对象
+    function change(str) {  
+        if(str == undefined) return  
+        str = str.substr(1)  
+        var arr = str.split("&"),  
+            obj = {},  
+            newArr = []  
+        arr.map(function(value,index,arr){  
+        newArr = value.split("=")  
+        if(newArr[0] != undefined) {  
+            obj[newArr[0]] = newArr[1]  
+        }  
+        })  
+        return obj  
+    }
+    //按下修改按钮,渲染页面
+    function moditfs(id){
+        $.ajax({
+            type:"post",
+            url:"/members/moditfmembers",
+            data:{id},
+            success(result){
+                $("input[name=memberssname]").val(result.memberssname);
+                $("input[name=membersphone]").val(result.membersphone);
+                $("input[name=jointime]").val(result.jointime.split("T")[0]);
+                $(`input:radio[value=${result.sex}]`).attr("checked","true");
+                // $(".selector").find("option[text='pxx']").attr("selected",true);
+               $(".viplevelbox").find(`option[value=${result.viplevel}]`).attr("selected","true");
+               $(".province").find(`option[value=${result.province}]`).attr("selected","true");
+               $(".city").find(`option[value=${result.province}]`).attr("selected","true");
+               $(".district").find(`option[value=${result.province}]`).attr("selected","true");
+               $(".status").find(`option[value=${result.stuffjob}]`).attr("selected","true");
+               $(".addressdetails").val(result.addressdetails);
+               $(".modtifysumbit").attr({data_id:id});
+            }
+
+        })
+    }
+    //模态确认修改按钮
+    function modtifysumbit(){
+        var id=$(".modtifysumbit").attr("data_id");
+        $.ajax({
+            type:"post",
+            url:`/members/updatamembers?id=${id}`,
+            // data:data,
+            data:$('#add_members').serialize(),
+            traditional: true,
+            success(result){
+                if(result.code==1){
+                    window.location.reload();
+                }else{
+                    alert("数据修改不成功，请联系管理员")
+                }
+            }
+        })
+    }
+    //给模态删除id值
+    function giveid(id){
+        $(".modaldelete").attr({deletid:id})
+    }
+    //按下删除按钮
+    function deleteitem(){
+        var id=$(".modaldelete").attr("deletid");
+        $.ajax({
+            type:"post",
+            data:{id},
+            url:"/members/deletemembers",
+            success(result){
+                if(result.code==1){
+                    window.location.reload();
+                }else{
+                    alert("数据删除不成功，请联系管理员")
+                }
+            }
+        })
+    }
+</script>
+</html>

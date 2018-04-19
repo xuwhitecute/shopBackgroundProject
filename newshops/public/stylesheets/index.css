@@ -1,0 +1,112 @@
+@import url(./ba.css);
+body, html {
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  background: #72D0EB;
+  min-height: 60px;
+  z-index: 20;
+}
+
+.header .container {
+  margin-left: 0;
+  width: 100%;
+}
+
+.header .menu-left {
+  float: left;
+  width: 34px;
+  height: 34px;
+  font-size: 34px;
+}
+
+.header .userinfo {
+  float: right;
+  height: 34px;
+  margin-top: 7px;
+}
+
+.header .userinfo button {
+  height: 34px;
+}
+
+.header .search {
+  float: right;
+  margin-top: 7px;
+}
+
+.asider {
+  width: 210px;
+  height: 100%;
+  float: left;
+  background-color: #2A3542;
+  box-sizing: border-box;
+  padding-top: 60px;
+  overflow-y: scroll;
+}
+
+.asider .wrap {
+  width: 100%;
+}
+
+.asider .wrap .aswider_item {
+  width: 90%;
+  margin: 0 5%;
+  font-size: 16px;
+}
+
+.asider .wrap .aswider_item i {
+  font-size: 16px;
+}
+
+.asider .wrap .aswider_item span {
+  margin: 0 30px;
+}
+
+.asider .wrap .item_list {
+  width: 90%;
+  margin: 0 5%;
+  background-color: #2A3542;
+  color: #fff;
+}
+
+.HDcolor {
+  background: #72D0EB;
+}
+
+.main {
+  box-sizing: border-box;
+  padding-top: 60px;
+  background-color: #E5E6E6;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.row-margin-bottom {
+  margin-bottom: 10px;
+}
+
+.showimg {
+  width: 150px;
+  height: 150px;
+}
+
+.listimg {
+  width: 80px;
+  height: 80px;
+}
+
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+.padding-top-buttom-20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

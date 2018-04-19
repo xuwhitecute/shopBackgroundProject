@@ -1,0 +1,62 @@
+<script src="/libjs/template.js"></script>
+<script type="text/html" id="test">
+  <ul>
+    {{ each menulist as item i }}
+      <li>
+          <div class="panel-group"  role="tablist" aria-multiselectable="true"  >
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" data-toggle="collapse" href="#{{item.class}}">
+                <h4 class="panel-title"  data-parent="#accordion"   aria-controls="{{item.class}}">
+                    {{  item.title }}
+                </h4>
+              </div>
+              <div id="{{item.class}}" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+                  {{ each item.list as ls i }}
+                  <a href="{{ ls.href }}">
+                  <div class="panel-body">
+                    {{ ls.name }}
+                  </div>
+                  </a>
+                {{ /each }}
+              </div>
+          </div>
+      </li>
+      {{ /each }}
+  </ul>
+</script>
+<div class="asider">
+    <div id="art-wrap">   
+    </div>
+</div>
+<script>
+  window.onload = function(){
+      var dictionary = {
+        menulist: [
+          // {class:"home",title:"首页",list:[]},
+          {class:"goods",title:"商品",
+          list:[{href:"/goods/show_goods",name:"商品列表"},
+                {href:"/goods/add_goods",name:"增加商品"},
+              ]},
+          {class:"staffs",title:"员工",list:[
+                {href:"/stuffs/show_stuffs",name:"员工列表"},
+                {href:"/stuffs/add_stuffs",name:"新增员工"},
+              ]},
+          {class:"order",title:"订单",list:[
+                {href:"/orders/show_orders",name:"订单列表"},
+                {href:"/orders/add_orders",name:"新增订单"},
+              ]},
+          {class:"members",title:"会员",list:[
+                {href:"/members/show_members",name:"会员列表"},
+                {href:"/members/add_members",name:"新增会员"},
+              ]},
+          {class:"logistics",title:"物流",list:[
+                // {href:"#",name:"发货页面"},
+                // {href:"#",name:"物流修改页面"},
+                {href:"/logistics",name:"发货地址库"},
+              ]},
+        ]
+      };
+      var html = template('test',dictionary);
+      document.getElementById('art-wrap').innerHTML = html;
+  }
+</script>

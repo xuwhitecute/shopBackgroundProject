@@ -1,0 +1,25 @@
+{
+  "name": "sever",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " supervisor ./app.js "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "connect-redis": "^3.3.3",
+    "cookie-parser": "^1.4.3",
+    "crypto": "^1.0.1",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "md5": "^2.2.1",
+    "mysql": "github:mysqljs/mysql"
+  },
+  "devDependencies": {}
+}

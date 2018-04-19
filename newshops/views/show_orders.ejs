@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/libcss/bootstrap.min.css" />
+    <link rel="stylesheet" href="/libcss/index.css"/>
+    <link rel="stylesheet" href="/libcss/add.css"/>
+    <link href="/libcss/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_599232_jnim5st0m8jpds4i.css" />
+    <script src="/libjs/echarts.min.js"></script>
+    <!-- <script src="/libjs/jquery.min.js"></script> -->
+    <script type="text/javascript" src="/libjs/xheditor/jquery/jquery-1.11.2.min.js"></script>
+    <script src="/libjs/bootstrap.min.js"></script>
+    <script src="/libjs/bootstrap-select.min.js"></script>
+    <script src="/libjs/defaults-zh_CN.min.js"></script>
+	<script type="text/javascript" src="/libjs/xheditor/xheditor-1.2.2.min.js"></script>
+	<script type="text/javascript" src="/libjs/xheditor/xheditor_lang/zh-cn.js"></script>
+    <title>shops</title>
+</head>
+<body>
+    <%-include('header.ejs',{username}) %>
+    <%include asider.ejs %>
+    <div class="main">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group col-lg-4">
+                    <input type="text " class="form-control col-lg-4 JgoodsSearch" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" onclick="searchGoods()" type="button">会员名查找</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+        <table class="table table-striped text-center">
+            <thead class="text-center">
+                <tr class="text-center">
+                    <th  class="col-xs-1"><a class="btn desc" href="/orders/show_orders?sort=oid" role="button">编号</a></th>
+                    <th  class="col-xs-1">会员名</th>
+                    <th  class="col-xs-1">商品名</th>
+                    <th  class="col-xs-1">商品图片</th>
+                    <th  class="col-xs-1">总价</th>
+                    <th  class="col-xs-1"><a class="btn desc" href="/orders/show_orders?sort=goodscount" role="button">数量</a></th>
+                    <th  class="col-xs-1"><a class="btn desc" href="/orders/show_orders?sort=ordercreatetime" role="button">创建时间</a></th>
+                    <th class="col-xs-1"><a class="btn desc" href="/orders/show_orders?sort=sendtime" role="button">发货时间</a></th>
+                    <th  class="col-xs-1">订单状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(result){ %> 
+                    <% result.forEach(function(item,idx){ %>
+                        <tr>
+                            <td ><%-item.oid%></td>
+                            <td ><%-item.memberssname%></td>
+                            <td><%-item.goodstitle%></td>
+                            <td><img src="<%-item.imgsrc.split(",")[0]%>" alt="" class="img-thumbnail listimg text-center"></td>
+                            <td><%-item.goodscount*1*item.goodschild.split("&")[1]*1%></td>
+                            <td><%-item.goodscount%></td>
+                            <td ><%-item.ordercreatetime?item.ordercreatetime.toLocaleString():""%></td>
+                            <td><%-item.sendtime?item.sendtime.toLocaleString():""%></td>
+                            <td><%-item.orderstatus==0?'未发货':'已发货'%></td>
+                            <td>
+                                <button  class="btn btn-danger"  role="button " data-toggle="modal" data-target="#deletegoods" onclick="giveid(<%-item.oid%>)" >删除</butt>
+                                <button  class="btn btn-info moditfgoods" role="button" data-toggle="modal" data-target="#delivery" onclick="delivery(<%-item.oid %>)">发货</button>
+                            </td>
+                        </tr>
+    
+                    <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+        <% if(totalPage){ %>
+            <div class="row">
+                    <nav aria-label="Page navigation " style="text-align: center;">
+                    <ul class="pagination ">
+                        <li>
+                        <a href="javascript:;" aria-label="Previous" onclick="pagechangeprev(this)">
+                            <span aria-hidden="true">上一页</span>
+                        </a>
+                        </li>
+                        <% for(var i=showpageNo-1;i<=totalPage;i++){ %>
+                            <li><a class="changeByA" href="javascript:;" onclick="changeBypageNo(<%- i %>)"><%-i%></a></li>
+                        <% } %>
+                        <li><span aria-hidden="true">第<%=pageNo%>页  总计<%=totalPage%>页</span></li>
+                        <li>
+                        <a href="javascript:;" aria-label="Next">
+                            <span aria-hidden="true" onclick="pagechangenext(this)">下一页</span>
+                        </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>      
+        <% }else{ %>
+            <div class="row">
+                <p class="text-danger text-center bg-danger">无此商品</p>
+            </div>    
+        <% } %>
+    </div>
+    <div class="modal fade" id="delivery" tabindex="-1" role="dialog"                      aria-labelledby="myModalLabel ">
+        <div class="modal-dialog" role="document" style="width:50%">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">发货</h4>
+            </div>
+            <div class="modal-body" data-id="">
+                <%- include('delivery',{result}) %>
+            </div>
+            <div class=" modal-footer " style="text-align:center;">
+                <button type="button" class="btn btn-primary modtifysumbit " onclick="modtifysumbit()" data-dismiss="modal">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+            </div>
+            </div>
+    </div>
+    <div class="modal fade" id="deletegoods" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">删除商品</h4>
+            </div>
+            <div class="modal-body">
+                您确定要删除商品吗？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary modaldelete" 
+              onclick="deleteGoods()" deletid="" data-dismiss="modal">删除</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script>
+    //搜寻内容
+    function searchGoods(){
+        var search=window.location.search;
+        var searchObj=change(search);
+        var sortsearch=searchObj.sort?`&sort=${searchObj.sort}`:``;
+        var pageNosearch=searchObj.pageNo?`&pageNo=${searchObj.pageNo}`:``;
+        var goodssearch=$(".JgoodsSearch").val()?`&search=${$(".JgoodsSearch").val()}`:'';
+        var searchstr=sortsearch+pageNosearch+goodssearch;
+        searchstr=searchstr.replace(/^&/,"")
+        window.location.href=window.location.pathname+"?"+searchstr;
+    }
+    //下角标按钮
+    function changeBypageNo(i){
+        var search=window.location.search;
+        var searchObj=change(search)
+        if(searchObj.sort){
+            window.location.href=window.location.pathname+`?sort=${searchObj.sort}&pageNo=${i}`;
+        }else{
+            window.location.href=window.location.pathname+`?pageNo=${i}`;
+        }
+    }
+    //上一页按钮
+    function pagechangeprev(){  
+        var search=window.location.search;
+        var searchObj=change(search)
+
+        // var sortsearch=searchObj.sort?`&sort=${searchObj.sort}`:``;
+        // var pageNosearch=`&pageNo=<%- pageNo-1<=1?1:pageNo-1 %>`;
+        // var goodssearch=searchObj.search?searchObj.search:'';
+        // var searchstr=sortsearch+pageNosearch+goodssearch;
+        // searchstr=searchstr.replace(/^&/,"")
+        // window.location.href=window.location.pathname+"?"+searchstr;
+
+
+
+        if(searchObj.sort){
+            window.location.href=window.location.pathname+`?sort=${searchObj.sort}`+"&pageNo=<%- pageNo-1<=1?1:pageNo-1 %>"
+        }else{
+            window.location.href=window.location.pathname+"?pageNo=<%- pageNo-1<=1?1:pageNo-1 %>"
+        }
+    }
+    //下一页按钮
+    function pagechangenext(){  
+        var search=window.location.search;
+        var searchObj=change(search)
+        if(searchObj.sort){
+            window.location.href=window.location.pathname+`?sort=${searchObj.sort}`+"&pageNo=<%- pageNo+1>=totalPage?totalPage:pageNo+1 %>"
+        }else{
+            window.location.href=window.location.pathname+"?pageNo=<%- pageNo+1>=totalPage?totalPage:pageNo+1 %>"
+        }
+    }
+
+    //=====================================================================================
+    //获取search对象
+    function change(str) {  
+        if(str == undefined) return  
+        str = str.substr(1)  
+        var arr = str.split("&"),  
+            obj = {},  
+            newArr = []  
+        arr.map(function(value,index,arr){  
+        newArr = value.split("=")  
+        if(newArr[0] != undefined) {  
+            obj[newArr[0]] = newArr[1]  
+        }  
+        })  
+        return obj  
+    }
+    //按发货按钮,渲染页面
+    function delivery(id){;
+        $.ajax({
+            type:"post",
+            url:"/orders/delivery",
+            data:{id},
+            success(result){
+                console.log(result)
+                $(".orderoid").html(result.id);
+                $(".ordermemberssname").html(result.memberssname);
+                $(".ordercreatetime").html(result.ordercreatetime.toLocaleString());
+                $(".orderimg").attr({src:result.imgsrc.split(",")[0]});
+                $(".modtifysumbit").attr({data_id:id})
+            }
+
+        })
+    }
+    //模态确认修改按钮
+    function modtifysumbit(){
+        // var imgsrcArry=$(".showimg").map(function(idx,item){return item.src}).get();
+        // imgsrcArry=imgsrcArry.map(function(item){
+        //         item=item.replace(new RegExp('http://placehold.it/150x150'),"");
+        //         item=item.replace(new RegExp('http://localhost:8080'),"");
+        //         return item;            
+        // })
+        // var data={
+        //     goodstitle:$(".Jgoodstitle ").val(),
+        //     goodssellpoint:$(".Jgoodssellpoint").val(),
+        //     Oprice:$(".JOprice").val(),
+        //     discount:$(".Jdiscount").val(),
+        //     childspecs:$("input[name=childspecs]").map(function(idx,item){ return item.value}).get(),
+        //     childprice:$("input[name=childprice]").map(function(idx,item){ return item.value}).get(),
+        //     childcount:$("input[name=childcount]").map(function(idx,item){ return item.value}).get(),
+        //     imgsrc:imgsrcArry,
+        //     count:$(".Jallcount").val(),
+        //     // goodsdetail:document.getElementsByClassName("editMode")[0].innerHTML,
+        //     // goodsdetail:,
+        // }
+        var id=$(".modtifysumbit").attr("data_id");
+        $.ajax({
+            type:"post",
+            url:`/orders/Courier?id=${id}`,
+            // data:data,
+            data:$('#add_stuffs').serialize(),
+            traditional: true,
+            success(result){
+                if(result.code==1){
+                    window.location.reload();
+                }else{
+                    alert("数据修改不成功，请联系管理员")
+                }
+            }
+        })
+    }
+    //给模态id值
+    function giveid(id){
+        $(".modaldelete").attr({deletid:id})
+    }
+    //按下删除按钮
+    function deleteGoods(){
+        var id=$(".modaldelete").attr("deletid");
+        $.ajax({
+            type:"post",
+            data:{id},
+            url:"/orders/deletorders",
+            success(result){
+                if(result.code==1){
+                    window.location.reload();
+                }else{
+                    alert("数据删除不成功，请联系管理员")
+                }
+            }
+        })
+    }
+</script>
+</html>
